@@ -21,10 +21,11 @@ namespace ApiClientes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = "Data Source=LAPTOP-9FEU7NC1;Initial Catalog=mydatabase;User ID=sa;Password=******;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            services.AddDbContext<ClienteDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SQLConnection")));
 
-            services.AddDbContext<ClienteDBContext>(options => options.UseSqlServer(connection));
             services.AddTransient<IClienteRepository, ClienteRepository>();
+
             services.AddControllers();
         }
 
